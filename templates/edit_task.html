@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Edit Task</h1>
+    <p class="form-subtitle">Update your task details and priority.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Task Title</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                value="{{ task.title }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                rows="4"
+            >{{ task.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="project">Project</label>
+            <select id="project" name="project" required>
+                {% for project in projects %}
+                    <option
+                        value="{{ project.id }}"
+                        {% if task.project_id == project.id %}selected{% endif %}
+                    >
+                        {{ project.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="assigned_to">Assign To</label>
+            <select id="assigned_to" name="assigned_to">
+                <option value="">Unassigned</option>
+
+                {% for user in users %}
+                    <option
+                        value="{{ user.id }}"
+                        {% if task.assigned_to_id == user.id %}selected{% endif %}
+                    >
+                        {{ user.username }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Task Status</label>
+            <select id="status" name="status" required>
+                <option value="todo"
+                    {% if task.status == "todo" %}selected{% endif %}>
+                    To Do
+                </option>
+
+                <option value="progress"
+                    {% if task.status == "progress" %}selected{% endif %}>
+                    In Progress
+                </option>
+
+                <option value="completed"
+                    {% if task.status == "completed" %}selected{% endif %}>
+                    Completed
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Task Priority</label>
+            <select id="priority" name="priority" required>
+                <option value="high"
+                    {% if task.priority == "high" %}selected{% endif %}>
+                    🔴 High Priority
+                </option>
+
+                <option value="medium"
+                    {% if task.priority == "medium" %}selected{% endif %}>
+                    🟡 Medium Priority
+                </option>
+
+                <option value="low"
+                    {% if task.priority == "low" %}selected{% endif %}>
+                    🟢 Low Priority
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="due_date">Due Date</label>
+            <input
+                type="date"
+                id="due_date"
+                name="due_date"
+                value="{{ task.due_date|date:'Y-m-d' }}"
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Save Changes
+        </button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

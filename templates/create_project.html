@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Create Project | TaskSync{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="auth-card">
+
+        <p class="eyebrow">PROJECT WORKSPACE</p>
+        <h1>Create a New Project</h1>
+        <p>Give your team a clear goal to work towards.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="form-message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="name">Project Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="e.g. College Event Management"
+                maxlength="200"
+                required
+            >
+
+            <label for="description">Project Description</label>
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Describe your project and its goals"
+                rows="5"
+            ></textarea>
+
+            <button type="submit" class="btn-primary">
+                Create Project
+            </button>
+        </form>
+
+        <p class="auth-footer">
+            <a href="/dashboard/">Back to Dashboard</a>
+        </p>
+
+    </div>
+</section>
+
+{% endblock %}

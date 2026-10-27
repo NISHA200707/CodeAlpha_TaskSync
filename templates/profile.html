@@ -1,0 +1,242 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskSync | My Profile</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        .profile-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .profile-header {
+            margin-bottom: 25px;
+        }
+
+        .profile-header h1 {
+            color: #172b4d;
+            margin-bottom: 8px;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            border: 1px solid #e5eaf1;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(23, 43, 77, 0.05);
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .profile-name {
+            color: #172b4d;
+            font-size: 25px;
+            margin: 0 0 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-email {
+            color: #7a869a;
+            margin-bottom: 25px;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-details {
+            border-top: 1px solid #e5eaf1;
+            padding-top: 20px;
+        }
+
+        .profile-detail {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .profile-detail span:first-child {
+            color: #7a869a;
+        }
+
+        .profile-detail span:last-child {
+            color: #172b4d;
+            font-weight: 600;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .profile-btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .profile-btn-primary {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .profile-btn-secondary {
+            background: #e9eef5;
+            color: #172b4d;
+        }
+
+        .profile-btn-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .profile-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .profile-container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-detail {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .profile-detail span:last-child {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <div class="profile-header">
+        <a href="{% url 'dashboard' %}"
+           class="profile-btn profile-btn-secondary">
+            ← Back to Dashboard
+        </a>
+
+        <h1 style="margin-top: 25px;">My Profile 👤</h1>
+
+        <p style="color: #7a869a;">
+            View and manage your TaskSync account.
+        </p>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="profile-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            {{ profile_user.username|first|upper }}
+        </div>
+
+        <h2 class="profile-name">
+            {{ profile_user.username }}
+        </h2>
+
+        <p class="profile-email">
+            {{ profile_user.email|default:"No email added" }}
+        </p>
+
+        <div class="profile-details">
+
+            <div class="profile-detail">
+                <span>Username</span>
+                <span>{{ profile_user.username }}</span>
+            </div>
+
+            <div class="profile-detail">
+                <span>Email Address</span>
+                <span>{{ profile_user.email|default:"Not provided" }}</span>
+            </div>
+
+            <div class="profile-detail">
+                <span>Account Created</span>
+                <span>{{ profile_user.date_joined|date:"d M Y" }}</span>
+            </div>
+
+            <div class="profile-detail">
+                <span>Last Login</span>
+                <span>
+                    {% if profile_user.last_login %}
+                        {{ profile_user.last_login|date:"d M Y, h:i A" }}
+                    {% else %}
+                        First login
+                    {% endif %}
+                </span>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <a href="{% url 'edit_profile' %}"
+               class="profile-btn profile-btn-primary">
+                ✏️ Edit Profile
+            </a>
+
+            <a href="{% url 'change_password' %}"
+               class="profile-btn profile-btn-secondary">
+                🔐 Change Password
+            </a>
+
+            <a href="{% url 'dashboard' %}"
+               class="profile-btn profile-btn-secondary">
+                📊 Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

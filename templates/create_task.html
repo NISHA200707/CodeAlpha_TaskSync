@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Create New Task</h1>
+    <p class="form-subtitle">Add a task to your project and assign its priority.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Task Title</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Enter task title"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                rows="4"
+                placeholder="Enter task description"
+            ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="project">Project</label>
+            <select id="project" name="project" required>
+                <option value="">Select a project</option>
+                {% for project in projects %}
+                    <option value="{{ project.id }}">
+                        {{ project.name }}
+                    </option>
+                {% empty %}
+                    <option value="" disabled>No projects available</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="assigned_to">Assign To</label>
+            <select id="assigned_to" name="assigned_to">
+                <option value="">Unassigned</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">
+                        {{ user.username }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Task Status</label>
+            <select id="status" name="status" required>
+                <option value="todo" selected>To Do</option>
+                <option value="progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Task Priority</label>
+            <select id="priority" name="priority" required>
+                <option value="high">🔴 High Priority</option>
+                <option value="medium" selected>🟡 Medium Priority</option>
+                <option value="low">🟢 Low Priority</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="due_date">Due Date</label>
+            <input
+                type="date"
+                id="due_date"
+                name="due_date"
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Create Task
+        </button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

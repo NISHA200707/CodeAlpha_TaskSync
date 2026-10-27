@@ -1,0 +1,115 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Home | TaskSync{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="eyebrow">SMART TEAM COLLABORATION</p>
+
+        <h1>
+            Bring Your Team's<br>
+            <span>Ideas to Life.</span>
+        </h1>
+
+        <p class="hero-text">
+            Plan projects, assign tasks, track progress,
+            and work together in one simple workspace.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="/admin/" class="btn-primary">Get Started</a>
+            <a href="#features" class="btn-secondary">Explore Features</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="dashboard-card">
+            <p class="card-label">YOUR WORKSPACE</p>
+            <h3>Project Overview</h3>
+
+            <div class="progress-item">
+                <div class="progress-heading">
+                    <span>Website Redesign</span>
+                    <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill fill-one"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-heading">
+                    <span>Mobile App</span>
+                    <span>45%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill fill-two"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-heading">
+                    <span>Research Project</span>
+                    <span>90%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill fill-three"></div>
+                </div>
+            </div>
+
+            <div class="task-summary">
+                <div>
+                    <strong>12</strong>
+                    <span>Tasks</span>
+                </div>
+                <div>
+                    <strong>08</strong>
+                    <span>Completed</span>
+                </div>
+                <div>
+                    <strong>04</strong>
+                    <span>Pending</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="features">
+    <div class="section-heading">
+        <p class="eyebrow">OUR FEATURES</p>
+        <h2>Everything Your Team Needs</h2>
+        <p>One workspace to organize your work and achieve more.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📁</div>
+            <h3>Project Management</h3>
+            <p>Create projects and keep all your team activities organized.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3>Task Tracking</h3>
+            <p>Assign tasks, set deadlines, and monitor progress easily.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Team Collaboration</h3>
+            <p>Share updates and communicate through task comments.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Ready to organize your next project?</h2>
+    <p>Bring your team, tasks, and ideas together with TaskSync.</p>
+    <a href="/admin/" class="btn-primary">Start Exploring</a>
+</section>
+
+{% endblock %}

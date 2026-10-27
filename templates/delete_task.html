@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Task | TaskSync{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-welcome">
+        <h1>🗑️ Delete Task</h1>
+        <p>Please confirm before deleting this task.</p>
+    </div>
+
+    <div class="dashboard-content-card">
+
+        <h2>Are you sure?</h2>
+
+        <p>
+            You are about to delete the task:
+            <strong>{{ task.title }}</strong>
+        </p>
+
+        <p>
+            This action cannot be undone. The task's comments will also
+            be deleted.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger">
+                Yes, Delete Task
+            </button>
+
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+
+    </div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}TaskSync{% endblock %}</title>
+
+    {% load static %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+{% if user.is_authenticated %}
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="/" class="brand">
+            <span class="brand-mark">✓</span>
+            <span>TaskSync</span>
+        </a>
+
+        <p class="sidebar-label">MAIN MENU</p>
+
+        <nav class="side-nav">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="side-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+            >
+                <span class="nav-icon">▦</span>
+                Dashboard
+            </a>
+
+            <a href="{% url 'dashboard' %}#my-tasks" class="side-link">
+                <span class="nav-icon">☷</span>
+                My Tasks
+            </a>
+
+            <a href="{% url 'dashboard' %}#my-projects" class="side-link">
+                <span class="nav-icon">◇</span>
+                Projects
+            </a>
+
+            <a href="{% url 'dashboard' %}#analytics" class="side-link">
+                <span class="nav-icon">▥</span>
+                Analytics
+            </a>
+
+            <a href="{% url 'dashboard' %}#team-activity" class="side-link">
+                <span class="nav-icon">♧</span>
+                Team Activity
+            </a>
+
+        </nav>
+
+        <p class="sidebar-label preferences-label">PREFERENCES</p>
+
+        <nav class="side-nav">
+
+            <a href="{% url 'dashboard' %}#my-tasks" class="side-link">
+                <span class="nav-icon">⚙</span>
+                Settings
+            </a>
+
+            <a href="/" class="side-link">
+                <span class="nav-icon">ⓘ</span>
+                Help Center
+            </a>
+
+        </nav>
+
+        <!-- Sidebar promotional card -->
+        <div class="upgrade-card">
+
+            <span class="upgrade-symbol">✦</span>
+
+            <h3>Keep your team in sync</h3>
+
+            <p>
+                Plan tasks and keep every project moving forward.
+            </p>
+
+            <a href="{% url 'create_project' %}" class="upgrade-button">
+                Create a project
+            </a>
+
+        </div>
+
+        <a href="/accounts/logout/" class="side-link logout-link">
+            <span class="nav-icon">↪</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- Main application -->
+    <div class="app-main">
+
+        <!-- Top navigation -->
+        <header class="topbar">
+
+            <button
+                class="mobile-menu"
+                type="button"
+                aria-label="Toggle navigation"
+                onclick="document.getElementById('sidebar').classList.toggle('sidebar-open')"
+            >
+                ☰
+            </button>
+
+            <form
+                class="top-search"
+                method="GET"
+                action="{% url 'dashboard' %}"
+            >
+
+                <span>⌕</span>
+
+                <input
+                    type="search"
+                    name="search"
+                    placeholder="Search your tasks, projects..."
+                    value="{{ search_query|default:'' }}"
+                    aria-label="Search tasks"
+                >
+
+            </form>
+
+            <div class="topbar-user">
+
+                <span class="notification-dot">♧</span>
+
+                <div class="avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <div class="user-details">
+                    <strong>{{ user.username }}</strong>
+                    <small>TaskSync member</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page content -->
+        <main class="main-content">
+
+            {% if messages %}
+
+                <div class="global-messages">
+
+                    {% for message in messages %}
+
+                        <p class="form-message {{ message.tags }}">
+                            {{ message }}
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <p>TaskSync © 2026 · Plan. Collaborate. Achieve.</p>
+        </footer>
+
+    </div>
+
+</div>
+
+{% else %}
+
+    <!-- Public navigation -->
+    <nav class="public-navbar">
+
+        <a href="/" class="public-logo">
+            TaskSync
+        </a>
+
+        <div class="public-links">
+
+            <a href="/">Home</a>
+
+            <a href="/#features">Features</a>
+
+            <a href="/accounts/register/">Register</a>
+
+            <a href="/accounts/login/">Login</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Public page content -->
+    <main class="public-content">
+
+        {% if messages %}
+
+            <div class="global-messages">
+
+                {% for message in messages %}
+
+                    <p class="form-message {{ message.tags }}">
+                        {{ message }}
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+        {% block public_content %}
+        {% endblock %}
+
+    </main>
+
+
+    <footer class="site-footer public-footer">
+        <p>TaskSync © 2026 · Plan. Collaborate. Achieve.</p>
+    </footer>
+
+{% endif %}
+
+
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
